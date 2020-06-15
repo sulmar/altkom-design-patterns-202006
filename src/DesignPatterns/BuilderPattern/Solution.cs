@@ -144,6 +144,10 @@ namespace BuilderPattern
         void Call();
     }
 
+    // https://github.com/VerbalExpressions/CSharpVerbalExpressions
+
+    // https://github.com/FluentDateTime/FluentDateTime
+
     public class FluentPhone : IFrom, ITo, ISubject, ICall
     {
         private string from;
