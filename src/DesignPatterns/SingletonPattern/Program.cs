@@ -43,13 +43,18 @@ namespace SingletonPattern
 
         private static Logger instance;
 
+        private static object syncLock = new object();
+
         public static Logger Instance
         {
             get
             {
-                if (instance == null)
+                lock (syncLock)
                 {
-                    instance = new Logger();
+                    if (instance == null)
+                    {
+                        instance = new Logger();
+                    }
                 }
 
                 return instance;
