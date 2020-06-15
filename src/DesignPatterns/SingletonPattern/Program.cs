@@ -31,6 +31,21 @@ namespace SingletonPattern
 
     public class Logger
     {
+        private static Logger instance;
+
+        public static Logger Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Logger();
+                }
+
+                return instance;
+            }
+        }
+
         public void LogInformation(string message)
         {
             Console.WriteLine($"Logging {message}");
@@ -45,7 +60,9 @@ namespace SingletonPattern
 
         public MessageService()
         {
-            logger = new Logger();
+            // logger = new Logger();
+
+            logger = Logger.Instance;
         }
 
         public void Send(string message)
@@ -60,7 +77,8 @@ namespace SingletonPattern
 
         public PrintService()
         {
-            logger = new Logger();
+            // logger = new Logger();
+            logger = Logger.Instance;
         }
 
         public void Print(string content, int copies)
