@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PrototypePattern
@@ -54,10 +55,17 @@ namespace PrototypePattern
             Invoice invoice = new Invoice("INV 1", DateTime.Parse("2020-06-01"), DateTime.Parse("2020-06-15"), customer);
             invoice.Details.Add(new InvoiceDetail(product1));
             invoice.Details.Add(new InvoiceDetail(product2, 3));
+            invoice.Note = "Pukac do drzwi 2 razy";
 
             Console.WriteLine(invoice);
 
-            Invoice invoiceCopy = new Invoice("INV 2", DateTime.Now, DateTime.Now, invoice.Customer);
+            //Invoice invoiceCopy = new Invoice("INV 2", DateTime.Now, DateTime.Now, invoice.Customer)
+            //{
+            //    DueDate = invoice.DueDate,
+            //    CreateDate = invoice.CreateDate,
+            //};
+
+            Invoice invoiceCopy = (Invoice) invoice.Clone();
 
             Console.WriteLine(invoiceCopy);
 
@@ -83,10 +91,12 @@ namespace PrototypePattern
 
     #region Invoice Model
 
-    public class Invoice
+    public class Invoice : ICloneable
     {
         public Invoice(string number, DateTime createDate, DateTime dueDate, Customer customer)
         {
+            Details = new Collection<InvoiceDetail>();
+
             Number = number;
             CreateDate = createDate;
             DueDate = dueDate;
@@ -97,10 +107,26 @@ namespace PrototypePattern
         public DateTime CreateDate { get; set; }
         public DateTime DueDate { get; set; }
         public Customer Customer { get; set; }
+        public string Note { get; set; }
 
         public decimal TotalAmount => Details.Sum(d => d.Quantity * d.Amount);
 
         public ICollection<InvoiceDetail> Details { get; set; }
+
+        public object Clone()
+        {
+            // Invoice invoiceCopy = new Invoice(this.Number, DateTime.Now, DateTime.Today.AddDays(7), this.Customer);
+
+            Invoice invoiceCopy = (Invoice) this.MemberwiseClone();
+            invoiceCopy.Details = new Collection<InvoiceDetail>();
+
+            foreach (var detail in this.Details)
+            {
+               invoiceCopy.Details.Add((InvoiceDetail) detail.Clone());
+            }
+
+            return invoiceCopy;
+        }
 
         public override string ToString()
         {
@@ -108,7 +134,7 @@ namespace PrototypePattern
         }
     }
 
-    public class InvoiceDetail
+    public class InvoiceDetail : ICloneable
     {
         public InvoiceDetail(Product product, int quantity = 1)
         {
@@ -120,6 +146,11 @@ namespace PrototypePattern
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public decimal Amount { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
 
         public override string ToString()
         {
