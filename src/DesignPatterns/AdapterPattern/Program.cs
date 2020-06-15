@@ -13,7 +13,9 @@ namespace AdapterPattern
 
             MotorolaRadioTest();
 
-            HyteriaRadioTest();
+            RadioAdapterTest.Test();
+
+            // HyteriaRadioTest();
 
             // CrystalReportTest();
         }
@@ -49,7 +51,7 @@ namespace AdapterPattern
             radio.PowerOff();
         }
 
-        private static void HyteriaRadioTest()
+        private static void HyteraRadioTest()
         {
             HyteraRadio radio = new HyteraRadio();
             radio.Init();

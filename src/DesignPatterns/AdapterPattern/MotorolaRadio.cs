@@ -2,8 +2,9 @@
 
 namespace AdapterPattern
 {
+   
 
-    public class MotorolaRadio
+    public class MotorolaRadio 
     {
         private bool enabled;
 
