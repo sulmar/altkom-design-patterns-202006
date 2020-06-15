@@ -4,6 +4,33 @@ using System.Collections.ObjectModel;
 
 namespace CrystalDecisions.CrystalReports
 {
+    public interface IReport
+    {
+        void Generate(string filename);
+    }
+
+    public class CrystalReportsReport : IReport
+    {
+        private string filename;
+        private string connectionString;
+
+        private ReportDocument rpt;
+
+        public CrystalReportsReport(string filename, string connectionString)
+        {
+            this.filename = filename;
+            this.connectionString = connectionString;
+        }
+
+        public void Generate(string output)
+        {
+            rpt.Load(filename);
+            // rpt.SetDatabaseLogon()
+
+            rpt.ExportToDisk(ReportDocument.ExportFormatType.PortableDocFormat, output);
+        }
+    }
+
     public class ReportDocument
     {
         public ReportDocument()

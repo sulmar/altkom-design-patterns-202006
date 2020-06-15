@@ -17,7 +17,19 @@ namespace AdapterPattern
 
             // HyteriaRadioTest();
 
-            // CrystalReportTest();
+            CrystalReportTest();
+
+            //Report report = new Report("raport1.rtp");
+            //report.Generate("output.pdf");
+        }
+
+
+        // Cwiczenie nr 1
+        // Utworz adapter, z ktorym bedzie mozna pracowac w nastepujacy sposob:
+        private static void AdapterCrystalReportTest()
+        {
+            //Report report = new Report("raport1.rtp");
+            //report.Generate("output.pdf");
         }
 
         private static void CrystalReportTest()
