@@ -34,18 +34,32 @@ namespace SingletonPattern
 
     }
 
-    public class Logger
+
+    public class AppContext
     {
-        protected Logger()
-        {
+        public string LoggedUser { get; set; }
 
-        }
+    }
 
-        private static Logger instance;
+    public class AppContextSingleton : Singleton<AppContext>
+    {
+
+    }
+
+    public class LoggerSingleton : Singleton<Logger>
+    {
+
+    }
+
+
+    public class Singleton<T>
+        where T : new()  // wymaganie - konstruktor bezparametryczny
+    {
+        private static T instance;
 
         private static object syncLock = new object();
 
-        public static Logger Instance
+        public static T Instance
         {
             get
             {
@@ -53,13 +67,42 @@ namespace SingletonPattern
                 {
                     if (instance == null)
                     {
-                        instance = new Logger();
+                        instance = new T();
                     }
                 }
 
                 return instance;
             }
         }
+    }
+
+
+    public class Logger
+    {
+        public Logger()
+        {
+
+        }
+
+        //private static Logger instance;
+
+        //private static object syncLock = new object();
+
+        //public static Logger Instance
+        //{
+        //    get
+        //    {
+        //        lock (syncLock)
+        //        {
+        //            if (instance == null)
+        //            {
+        //                instance = new Logger();
+        //            }
+        //        }
+
+        //        return instance;
+        //    }
+        //}
 
         public void LogInformation(string message)
         {
@@ -77,7 +120,7 @@ namespace SingletonPattern
         {
             // logger = new Logger();
 
-            logger = Logger.Instance;
+            logger = LoggerSingleton.Instance;
         }
 
         public void Send(string message)
@@ -92,7 +135,7 @@ namespace SingletonPattern
 
         public PrintService()
         {
-            logger = Logger.Instance;
+            logger = LoggerSingleton.Instance;
         }
 
         public void Print(string content, int copies)
