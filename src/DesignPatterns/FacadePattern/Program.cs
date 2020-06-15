@@ -9,8 +9,39 @@ namespace FacadePattern
         {
             Console.WriteLine("Hello Facade Pattern!");
 
+            ZeroDivideFloat();
+            ZeroDivide();
 
-            WashMachineTest();
+            // WashMachineTest();
+
+
+            FacadeWashMachineTest();
+
+        }
+
+        private static void ZeroDivide()
+        {
+            int x = 10;
+            int y = 0;
+
+            int result = x / y;
+        }
+
+        private static void ZeroDivideFloat()
+        {
+            float x = 10;
+            float y = 0;
+
+            float result = x / y;
+        }
+
+        private static void FacadeWashMachineTest()
+        {
+            IWashMachine washMachine = new WashMachine(new Heater(), new Engine(), new Pump());            
+            
+            washMachine.SetTemperature(30);
+            washMachine.Start();
+
         }
 
         private static void WashMachineTest()
@@ -24,8 +55,7 @@ namespace FacadePattern
 
             WashMachine washMachine = new WashMachine(new Heater(), new Engine(), new Pump());
 
-            bool quick = false;
-
+            bool quick = true;
 
             if (quick)
             {
@@ -157,7 +187,20 @@ namespace FacadePattern
         }
     }
 
-    public class WashMachine
+    // Wybieram program (steruje czasem oraz cyklem) 
+    // Ustawiam temperaturę
+    // Ustawiam prędkość wirowania
+
+
+    // Facade
+    public interface IWashMachine
+    {
+        void SetTemperature(byte temperature);
+        void SetRotationSpeed(int rotationSpeed);
+        void Start();        
+    }
+
+    public class WashMachine : IWashMachine
     {
         public WashMachine(Heater heater, Engine engine, Pump pump)
         {
@@ -171,7 +214,84 @@ namespace FacadePattern
         public Engine Engine { get; set; }
         public Pump Pump { get; set; }
 
+
+        private byte temperature;
+
         public bool Locked { get; set; }
+
+        public void SetRotationSpeed(int rotationSpeed)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetTemperature(byte temperature)
+        {
+            this.temperature = temperature;
+        }
+
+        public void Start()
+        {
+            // Włączenie blokady
+            this.Locked = true;
+            Console.WriteLine("Włączenie blokady");
+
+            // pobiera wodę
+            this.Pump.Direction = Direction.In;
+            this.Pump.Start();
+
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+
+            this.Pump.Stop();
+
+            // podgrzewa wodę
+
+            int maxTemp = 30;
+
+            if (temperature > maxTemp)
+            {
+                Console.WriteLine($"Błąd - nastawiona temperaturę większą od {maxTemp} st. C");
+                return;
+            }
+
+            this.Heater.Temperature = temperature;
+            this.Heater.On();
+
+            // obraca bęben 
+
+            this.Engine.RotationSpeed = 200;
+            this.Engine.RotateRight();
+
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+
+            this.Engine.RotateLeft();
+
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+
+            // zakończenie cyklu prania
+
+            this.Engine.Stop();
+            this.Engine.RotationSpeed = 0;
+
+            this.Heater.Off();
+
+            // wypompowanie wody
+
+            this.Pump.Direction = Direction.Out;
+            this.Pump.Start();
+
+            this.Pump.Direction = Direction.In;
+            this.Pump.Start();
+
+
+            // Zwolnienie blokady
+            this.Locked = false;
+            Console.WriteLine("Zwolnienie blokady");
+        }
+
+        public void Stop()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Pump
