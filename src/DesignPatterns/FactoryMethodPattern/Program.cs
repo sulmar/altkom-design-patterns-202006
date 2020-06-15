@@ -18,14 +18,9 @@ namespace FactoryMethodPattern
 
             string input = Console.ReadLine();
 
-            Visit visit = null;
+            IVisitFactory visitFactory = new WorkdayVisitFactory();
 
-            switch (input)
-            {
-                case "N": visit = new NFZVisit(); break;
-                case "P": visit = new PrivateVisit(); break;
-                case "F": visit = new PackageVisit(); break;
-            }
+            Visit visit = visitFactory.Create(input);
 
             decimal totalAmount = visit.CalculateAmount();
             Console.WriteLine($"Total amount {totalAmount:C2}");
@@ -34,6 +29,7 @@ namespace FactoryMethodPattern
 
     #region Models
 
+    // Concrete Product
     public class NFZVisit : Visit
     {
         public override decimal CalculateAmount()
@@ -42,11 +38,13 @@ namespace FactoryMethodPattern
         }
     }
 
+    // Concrete Product
     public class PrivateVisit : Visit
     {
 
     }
 
+    // Concrete Product
     public class PackageVisit : Visit
     {
         public override decimal CalculateAmount()
@@ -55,6 +53,8 @@ namespace FactoryMethodPattern
         }
     }
 
+
+    // Abstract Product
     public abstract class Visit
     {
         public DateTime VisitDate { get; set; }
@@ -74,4 +74,35 @@ namespace FactoryMethodPattern
     }
 
     #endregion
+
+    // Abstract Creator
+    public interface IVisitFactory
+    {
+        Visit Create(string input);
+    }
+
+    public class CovidVisitFactory : IVisitFactory
+    {
+        public Visit Create(string input)
+        {
+            return new PrivateVisit();
+        }
+    }
+
+    // Concrete Creator
+    public class WorkdayVisitFactory : IVisitFactory
+    {
+        public Visit Create(string input)
+        {
+            switch (input)
+            {
+                case "N": return new NFZVisit(); 
+                case "P": return new PrivateVisit(); 
+                case "F": return new PackageVisit();
+
+                default:
+                    throw new NotSupportedException(input);
+            }
+        }
+    }
 }

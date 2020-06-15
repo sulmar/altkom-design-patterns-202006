@@ -9,6 +9,8 @@ namespace SingletonPattern
             Console.WriteLine("Hello Singleton Pattern!");
 
             LoggerTest();
+
+            
         }
 
         private static void LoggerTest()
