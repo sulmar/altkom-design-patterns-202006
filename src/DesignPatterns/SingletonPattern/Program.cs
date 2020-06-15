@@ -29,8 +29,18 @@ namespace SingletonPattern
         }
     }
 
+    public class FileLogger : Logger
+    {
+
+    }
+
     public class Logger
     {
+        protected Logger()
+        {
+
+        }
+
         private static Logger instance;
 
         public static Logger Instance
@@ -77,7 +87,6 @@ namespace SingletonPattern
 
         public PrintService()
         {
-            // logger = new Logger();
             logger = Logger.Instance;
         }
 
