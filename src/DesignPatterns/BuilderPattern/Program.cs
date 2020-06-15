@@ -15,7 +15,19 @@ namespace BuilderPattern
         {
             Console.WriteLine("Hello Builder Pattern!");
 
+            FluentPhoneTest.CallTest();
+
             //PhoneTest();
+
+            // Fluent API
+            //FluentPhone
+            //    .On
+            //    .From("555000111")
+            //    .To("555666333")
+            //    .To("555666331")
+            //    .To("555666332")
+            //    .WithSubject("DP")
+            //.Call();
 
             // SalesReportTest();
 

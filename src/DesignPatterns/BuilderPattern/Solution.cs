@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -95,6 +96,95 @@ namespace BuilderPattern
             output += $"{Title} {CreateDate}\n";
 
             return output;
+        }
+    }
+
+    
+    //FluentPhone
+    //    .On
+    //    .From("555000111")
+    //    .To("555666333")
+    //    .To("555666331")
+    //    .To("555666332")
+    //    .WithSubject("DP")
+    //.Call();
+
+    public class FluentPhoneTest
+    {
+        public static void CallTest()
+        {
+            FluentPhone
+                .On
+                .From("555000111")
+                .To("555666333")
+                .To("555666331")
+                .To("555666332")
+                .WithSubject("DP")
+                .Call();
+        }
+    }
+
+    public class FluentPhone
+    {
+        private string from;
+        private ICollection<string> tos;
+        private string subject;
+
+        protected FluentPhone()
+        {
+            tos = new Collection<string>();
+        }
+
+        public static FluentPhone On
+        {
+            get
+            {
+                return new FluentPhone();
+            }
+        }
+
+        public FluentPhone From(string number)
+        {
+            this.from = number;
+
+            return this;
+        }
+
+        public FluentPhone To(string number)
+        {
+            this.tos.Add(number);
+
+            return this;
+        }
+
+        public FluentPhone WithSubject(string subject)
+        {
+            this.subject = subject;
+
+            return this;
+        }
+
+
+        // Build
+        public void Call()
+        {
+            foreach (var to in tos)
+            {
+                if (!string.IsNullOrEmpty(subject))
+                    Call(from, to, subject);
+                else
+                    Call(from, to);
+            }
+        }
+
+        private void Call(string from, string to, string subject)
+        {
+            Console.WriteLine($"Calling from {from} to {to} with subject {subject}");
+        }
+
+        private void Call(string from, string to)
+        {
+            Console.WriteLine($"Calling from {from} to {to}");
         }
     }
 
