@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CrystalDecisions.CrystalReports
 {
     public class ReportDocument
     {
+        public ReportDocument()
+        {
+            Database = new Database();
+        }
+
         public Database Database { get; set; }
+
 
         public void Load(string filename)
         {
@@ -51,11 +58,21 @@ namespace CrystalDecisions.CrystalReports
     public class Database
     {
         public IEnumerable<Table> Tables { get; set; }
+
+        public Database()
+        {
+            Tables = new Collection<Table>();
+        }
     }
 
     public class LogOnInfo
     {
         public ConnectionInfo ConnectionInfo { get; set; }
+
+        public LogOnInfo()
+        {
+            ConnectionInfo = new ConnectionInfo();
+        }
     }
 
 
