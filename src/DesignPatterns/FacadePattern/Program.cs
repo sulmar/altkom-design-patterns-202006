@@ -32,6 +32,11 @@ namespace FacadePattern
             float x = 10;
             float y = 0;
 
+            if (y==0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
             float result = x / y;
         }
 
@@ -197,13 +202,16 @@ namespace FacadePattern
     {
         void SetTemperature(byte temperature);
         void SetRotationSpeed(int rotationSpeed);
-        void Start();        
+        void Start();
     }
 
     public class WashMachine : IWashMachine
     {
         public WashMachine(Heater heater, Engine engine, Pump pump)
         {
+            if (heater == null)
+                throw new ArgumentNullException(nameof(heater));
+
             Heater = heater;
             Engine = engine;
             Pump = pump;
@@ -226,10 +234,25 @@ namespace FacadePattern
 
         public void SetTemperature(byte temperature)
         {
+            if (temperature > 100)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperature));
+            }
+
             this.temperature = temperature;
         }
 
         public void Start()
+        {
+            StartQuick();
+        }
+
+        public void StartStandard()
+        {
+
+        }
+
+        public void StartQuick()
         {
             // Włączenie blokady
             this.Locked = true;
