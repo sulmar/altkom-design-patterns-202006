@@ -12,7 +12,9 @@ namespace SingletonPattern
         }
 
         private static void LoggerTest()
-        {
+        { 
+            MessageService ms = Singleton<MessageService>.Instance;
+
             MessageService messageService = new MessageService();
             PrintService printService = new PrintService();
             messageService.Send("Hello World!");
@@ -34,11 +36,9 @@ namespace SingletonPattern
 
     }
 
-
     public class AppContext
     {
         public string LoggedUser { get; set; }
-
     }
 
     public class AppContextSingleton : Singleton<AppContext>
@@ -50,7 +50,6 @@ namespace SingletonPattern
     {
 
     }
-
 
     public class Singleton<T>
         where T : new()  // wymaganie - konstruktor bezparametryczny
