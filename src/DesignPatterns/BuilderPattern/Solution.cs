@@ -119,12 +119,32 @@ namespace BuilderPattern
                 .To("555666333")
                 .To("555666331")
                 .To("555666332")
-                .WithSubject("DP")
+                //.WithSubject("DP")
                 .Call();
         }
     }
 
-    public class FluentPhone
+    public interface IFrom
+    {
+        ITo From(string number);
+    }
+
+    public interface ITo
+    {
+        ISubject To(string number);
+    }
+
+    public interface ISubject : ITo, ICall
+    {
+        ICall WithSubject(string subject);
+    }
+
+    public interface ICall
+    {
+        void Call();
+    }
+
+    public class FluentPhone : IFrom, ITo, ISubject, ICall
     {
         private string from;
         private ICollection<string> tos;
@@ -135,7 +155,7 @@ namespace BuilderPattern
             tos = new Collection<string>();
         }
 
-        public static FluentPhone On
+        public static IFrom On
         {
             get
             {
@@ -143,21 +163,21 @@ namespace BuilderPattern
             }
         }
 
-        public FluentPhone From(string number)
+        public ITo From(string number)
         {
             this.from = number;
 
             return this;
         }
 
-        public FluentPhone To(string number)
+        public ISubject To(string number)
         {
             this.tos.Add(number);
 
             return this;
         }
 
-        public FluentPhone WithSubject(string subject)
+        public ICall WithSubject(string subject)
         {
             this.subject = subject;
 
