@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Text;
 
 namespace VisitorPattern.Solution
@@ -12,7 +13,7 @@ namespace VisitorPattern.Solution
         {
             Form form = Get();
 
-            IVisitor visitor = new MarkdownVisitor();
+            IVisitor visitor = new HtmlVisitor();
 
             form.Accept(visitor);
 
@@ -21,6 +22,36 @@ namespace VisitorPattern.Solution
             Console.WriteLine(output);
 
             System.IO.File.AppendAllText("index.html", output);
+
+            ExpandoObjectTest();
+
+            DynamicTest();
+        }
+
+        private static void DynamicTest()
+        {
+            // DLR
+
+            dynamic x = 10;            
+
+            x = "Hello World";
+
+            // ExpandoObject
+
+        }
+
+        private static void ExpandoObjectTest()
+        {
+            dynamic expand = new ExpandoObject();
+
+            expand.Name = "Rick";
+            expand.HelloWorld = (Func<string, string>)((string name) =>
+            {
+                return "Hello " + name;
+            });
+
+            Console.WriteLine(expand.Name);
+            Console.WriteLine(expand.HelloWorld("Dufus"));
         }
 
         public static Form Get()
@@ -227,4 +258,8 @@ namespace VisitorPattern.Solution
             throw new NotImplementedException();
         }
     }
+
+
+
+
 }
