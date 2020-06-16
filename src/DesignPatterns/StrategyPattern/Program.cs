@@ -14,25 +14,28 @@ namespace StrategyPattern
 
             // HappyHoursOrderCalculatorTest();
 
-            HappyHoursDiscountCalculatorTest();
+            // HappyHoursDiscountCalculatorTest();
+
+
+            DiscountCalculatorTest.Test();
 
 
         }
 
-        private static void HappyHoursDiscountCalculatorTest()
-        {
-            Customer customer = new Customer("Anna", "Kowalska");
+        //private static void HappyHoursDiscountCalculatorTest()
+        //{
+        //    Customer customer = new Customer("Anna", "Kowalska");
 
-            Order order = CreateOrder(customer);
+        //    Order order = CreateOrder(customer);
 
-            IDiscountStrategy discountStrategy 
-                    = new HappyHoursDiscountStrategy(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
+        //    IDiscountStrategy discountStrategy 
+        //            = new HappyHoursDiscountStrategy(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
 
-            OrderDiscountCalculator calculator = new OrderDiscountCalculator(discountStrategy);
+        //    OrderDiscountCalculator calculator = new OrderDiscountCalculator(discountStrategy);
 
-            decimal discount = calculator.CalculateDiscount(order);
+        //    decimal discount = calculator.CalculateDiscount(order);
 
-        }
+        //}
 
         private static void HappyHoursOrderCalculatorTest()
         {
