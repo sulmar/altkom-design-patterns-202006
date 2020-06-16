@@ -14,10 +14,24 @@ namespace TemplateMethodPattern
 
             Order order = CreateOrder();
 
-            HappyHoursOrderCalculator calculator = new HappyHoursOrderCalculator();
+            DelegateOrderCalculator(order);
+
+               BetterHappyHoursOrderCalculator calculator =
+                new BetterHappyHoursOrderCalculator(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
+
             decimal discount = calculator.CalculateDiscount(order);
 
             Console.WriteLine($"Original amount: {order.Amount:C2} Discount: {discount:C2}");
+        }
+
+        private static void DelegateOrderCalculator(Order order)
+        {
+            DelegateOrderCalculator delegateOrderCalculator = new DelegateOrderCalculator(
+                 o => o.Customer.Gender == Gender.Male,
+                 o => o.Amount * 0.1m
+             );
+
+            decimal discount = delegateOrderCalculator.CalculateDiscount(order);
         }
 
         private static Order CreateOrder()
