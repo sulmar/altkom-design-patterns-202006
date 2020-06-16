@@ -8,14 +8,16 @@ namespace CommandPattern
         {
             Console.WriteLine("Hello Command Pattern!");
 
-            Message message = new Message("555000123", "555888000", "Hello World!");
+            CommandTest.Test();
+
+            Message message = new Message(from: "", to: "555888000", content: "Hello World!");
 
             if (message.CanPrint())
             {
                 message.Print();
             }
 
-            if (message.CanSend())
+            if (message.CanPrint())
             {
                 message.Send();
             }    
@@ -36,7 +38,6 @@ namespace CommandPattern
         public string From { get; set; }
         public string To { get; set; }
         public string Content { get; set; }
-
      
         public void Send()
         {
@@ -50,12 +51,12 @@ namespace CommandPattern
 
         public void Print()
         {
-            Console.WriteLine($"Print message from <{From}> to <{To}> {Content}");
+            Console.WriteLine($"Print message {Content}");
         }
 
         public bool CanPrint()
         {
-            return string.IsNullOrEmpty(Content);
+            return !string.IsNullOrEmpty(Content);
         }
 
 
