@@ -16,8 +16,8 @@ namespace TemplateMethodPattern
 
             DelegateOrderCalculator(order);
 
-               BetterHappyHoursOrderCalculator calculator =
-                new BetterHappyHoursOrderCalculator(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
+               PercentageHappyHoursOrderCalculator calculator =
+                new PercentageHappyHoursOrderCalculator(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
 
             decimal discount = calculator.CalculateDiscount(order);
 

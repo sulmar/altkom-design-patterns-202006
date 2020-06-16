@@ -2,6 +2,8 @@
 
 namespace TemplateMethodPattern
 {
+
+    // Abstract
     public abstract class OrderCalculatorBase
     {
         public abstract bool CanDiscount(Order order);  // Predykat
@@ -41,7 +43,7 @@ namespace TemplateMethodPattern
         }
     }
 
-
+    // Concrete 
     public class BetterGenderOrderCalculator : OrderCalculatorBase
     {
         private readonly Gender gender;
@@ -58,13 +60,40 @@ namespace TemplateMethodPattern
         public override decimal Discount(Order order) => order.Amount * percentage;
     }
 
-    public class BetterHappyHoursOrderCalculator : OrderCalculatorBase
+   
+
+    public class FixedHappyHoursOrderCalculator : OrderCalculatorBase
+    {
+        private readonly TimeSpan from;
+        private readonly TimeSpan to;
+        private readonly decimal amount;
+
+        public FixedHappyHoursOrderCalculator(TimeSpan from, TimeSpan to, decimal amount)
+        {
+            this.from = from;
+            this.to = to;
+            this.amount = amount;
+        }
+
+        public override bool CanDiscount(Order order)
+        {
+            return order.OrderDate.TimeOfDay >= from
+                && order.OrderDate.TimeOfDay <= to;
+        }
+
+        public override decimal Discount(Order order)
+        {
+            return order.Amount - amount;
+        }
+    }
+
+    public class PercentageHappyHoursOrderCalculator : OrderCalculatorBase
     {
         private readonly TimeSpan from;
         private readonly TimeSpan to;
         private readonly decimal percentage;
 
-        public BetterHappyHoursOrderCalculator(TimeSpan from, TimeSpan to, decimal percentage)
+        public PercentageHappyHoursOrderCalculator(TimeSpan from, TimeSpan to, decimal percentage)
         {
             this.from = from;
             this.to = to;
