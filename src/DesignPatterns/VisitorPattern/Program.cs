@@ -10,6 +10,8 @@ namespace VisitorPattern
         {
             Console.WriteLine("Hello Visitor Pattern!");
 
+            Solution.VisitorTest.Test();
+
             Form form = Get();
 
             string html = form.GetHtml();
@@ -26,7 +28,6 @@ namespace VisitorPattern
 
                 Body = new Collection<Control>
                 {
-
                     new Control { Type = ControlType.Label, Caption = "Person", Name = "lblName" },
                     new Control { Type = ControlType.TextBox, Caption = "FirstName", Name = "txtFirstName", Value = "John"},
                     new Control { Type = ControlType.Checkbox, Caption = "IsAdult", Name = "chkIsAdult", Value = "true" },
