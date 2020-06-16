@@ -2,6 +2,75 @@
 
 namespace ProxyPattern
 {
+    public class CustomersViewModel
+    {
+
+        public virtual void Send()
+        {
+
+        }
+    }
+
+    //public class ProxyCustomersViewModel : CustomersViewModel
+    //{
+    //    private ICommand SendCommand;
+
+    //    public override void Send()
+    //    {
+    //        base.Send();
+    //    }
+    //}
+
+    public class Device
+    {
+        private bool enabled;
+
+        public virtual void SwitchOn()
+        {
+            enabled = true;
+        }
+
+        public virtual void SwitchOff()
+        {
+            enabled = false;
+        }
+    }
+
+    public class Customer
+    {
+        public int Id { get; set; }
+        public virtual string FirstName { get; set; }
+    }
+
+    public class ProxyCustomer : Customer
+    {
+        private bool hasChanged;
+
+        public override string FirstName
+        {
+            get {
+                return base.FirstName;
+            }
+            set
+            {
+                base.FirstName = value;
+
+                hasChanged = true;
+            }
+        }
+    }
+
+
+    public class ProxyDevice : Device
+    {
+        public override void SwitchOn()
+        {
+            Console.WriteLine("Before Switch On");
+            base.SwitchOn();
+            Console.WriteLine("After Switch On");
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -10,6 +79,8 @@ namespace ProxyPattern
             SaveProductTest();
 
         }
+
+        
 
         private static void SaveProductTest()
         {
