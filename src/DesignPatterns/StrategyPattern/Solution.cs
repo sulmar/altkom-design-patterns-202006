@@ -1,12 +1,20 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace StrategyPattern
 {
+   
+
     public interface IComplexDiscountStrategy
     {
         bool CanDiscount(Order order);
         decimal Discount(Order order);        
+    }
+
+    public interface ICompositeDiscountStrategy : ICanDiscountStrategy, IDiscountStrategy
+    {
+
     }
 
     public interface ICanDiscountStrategy
