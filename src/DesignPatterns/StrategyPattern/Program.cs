@@ -12,8 +12,25 @@ namespace StrategyPattern
         {
             Console.WriteLine("Hello Strategy Pattern!");
 
-            HappyHoursOrderCalculatorTest();
+            // HappyHoursOrderCalculatorTest();
 
+            HappyHoursDiscountCalculatorTest();
+
+
+        }
+
+        private static void HappyHoursDiscountCalculatorTest()
+        {
+            Customer customer = new Customer("Anna", "Kowalska");
+
+            Order order = CreateOrder(customer);
+
+            IDiscountStrategy discountStrategy 
+                    = new HappyHoursDiscountStrategy(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
+
+            OrderDiscountCalculator calculator = new OrderDiscountCalculator(discountStrategy);
+
+            decimal discount = calculator.CalculateDiscount(order);
 
         }
 
@@ -23,7 +40,7 @@ namespace StrategyPattern
 
             Order order = CreateOrder(customer);
 
-            HappyHoursOrderCalculator calculator = new HappyHoursOrderCalculator();
+            HappyHoursOrderCalculator calculator = new HappyHoursOrderCalculator(TimeSpan.Parse("9:30"), TimeSpan.FromHours(16), 0.1m);
             decimal discount = calculator.CalculateDiscount(order);
 
             Console.WriteLine($"Original amount: {order.Amount:C2} Discount: {discount:C2}");
