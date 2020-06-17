@@ -5,16 +5,21 @@ using System.Threading;
 
 namespace ObserverPattern
 {
+
+ 
+
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Observer Pattern!");
 
-            Covid19Test();
+            ObserverTest.Test();
+
+            // Covid19Test();
 
 
-            //   CpuTest();
+             CpuTest();
         }
 
         private static void Covid19Test()
@@ -74,47 +79,47 @@ namespace ObserverPattern
         }
 
 
-        public class Observation
-        {
-            public string Country { get; set; }
-            public int Confirmed { get; set; }
-            public int Recovered { get; set; }
-            public int Deaths { get; set; }
-
-            public override string ToString()
-            {
-                return $"{Country} {Confirmed}/{Recovered}/{Deaths}";
-            }
-
-        }
-
-        public interface IObservationService
-        {
-            IEnumerable<Observation> Get();
-        }
-
-        public class FakeObservationService : IObservationService
-        {
-            public IEnumerable<Observation> Get()
-            {
-                yield return new Observation { Country = "China", Confirmed = 2 };
-                yield return new Observation { Country = "Germany", Confirmed = 1 };
-                yield return new Observation { Country = "China", Confirmed = 20 };
-                yield return new Observation { Country = "Germany", Confirmed = 60, Recovered = 4, Deaths = 2 };
-                yield return new Observation { Country = "Poland", Confirmed = 10, Recovered = 5 };
-                yield return new Observation { Country = "China", Confirmed = 30 };
-                yield return new Observation { Country = "Poland", Confirmed = 50, Recovered = 15 };
-                yield return new Observation { Country = "US", Confirmed = 10, Recovered = 5, Deaths = 1 };
-                yield return new Observation { Country = "US", Confirmed = 11, Recovered = 3, Deaths = 4 };
-                yield return new Observation { Country = "Poland", Confirmed = 45, Recovered = 25 };
-                yield return new Observation { Country = "Germany", Confirmed = 52, Recovered = 4, Deaths = 1 };
-            }
-        }
-
+       
 
 
     }
 
+    public class Observation
+    {
+        public string Country { get; set; }
+        public int Confirmed { get; set; }
+        public int Recovered { get; set; }
+        public int Deaths { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Country} {Confirmed}/{Recovered}/{Deaths}";
+        }
+
+    }
+
+    public interface IObservationService
+    {
+        IEnumerable<Observation> Get();
+    }
+
+    public class FakeObservationService : IObservationService
+    {
+        public IEnumerable<Observation> Get()
+        {
+            yield return new Observation { Country = "China", Confirmed = 2 };
+            yield return new Observation { Country = "Germany", Confirmed = 1 };
+            yield return new Observation { Country = "China", Confirmed = 20 };
+            yield return new Observation { Country = "Germany", Confirmed = 60, Recovered = 4, Deaths = 2 };
+            yield return new Observation { Country = "Poland", Confirmed = 10, Recovered = 5 };
+            yield return new Observation { Country = "China", Confirmed = 30 };
+            yield return new Observation { Country = "Poland", Confirmed = 50, Recovered = 15 };
+            yield return new Observation { Country = "US", Confirmed = 10, Recovered = 5, Deaths = 1 };
+            yield return new Observation { Country = "US", Confirmed = 11, Recovered = 3, Deaths = 4 };
+            yield return new Observation { Country = "Poland", Confirmed = 45, Recovered = 25 };
+            yield return new Observation { Country = "Germany", Confirmed = 52, Recovered = 4, Deaths = 1 };
+        }
+    }
 
 
 }
