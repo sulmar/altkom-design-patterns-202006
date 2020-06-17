@@ -10,10 +10,14 @@ namespace StatePattern
 
             // OrderTest();
 
+            Solution.StateTest.LampTest();
+
             Lamp lamp = new Lamp();
             Console.WriteLine(lamp.State);
 
             lamp.PowerOn();
+
+            Console.WriteLine("send email");
             Console.WriteLine(lamp.State);
 
             lamp.PowerOff();
@@ -121,6 +125,11 @@ namespace StatePattern
                 State = LampState.On;
             }
             else
+                if (State == LampState.On)
+                {
+                    State = LampState.Blinking;
+                }
+            else
                 throw new InvalidOperationException($"state {State}");
 
         }
@@ -143,7 +152,8 @@ namespace StatePattern
     public enum LampState
     {
         On,
-        Off
+        Off,
+        Blinking
     }
 
     #endregion
