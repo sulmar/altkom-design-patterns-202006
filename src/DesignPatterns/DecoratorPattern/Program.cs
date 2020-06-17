@@ -8,11 +8,16 @@ using System.Text;
 
 namespace DecoratorPattern
 {
+
+
+
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Decorator Pattern!");
+
+            Solution.OrderTest.Test();
 
             CalculateOrderDiscountTest();
 
@@ -61,6 +66,8 @@ namespace DecoratorPattern
             using (GZipStream zipStream = new GZipStream(fs2, CompressionMode.Compress, false))
             {
                 zipStream.Write(bytes, 0, bytes.Length);
+
+                // sourcefile > gzip > encrypt > sign > targetfile 
             }
         }
     }
@@ -72,6 +79,7 @@ namespace DecoratorPattern
         public DateTime OrderDate { get; set; }
         public Customer Customer { get; set; }
         public decimal Amount => Details.Sum(p => p.LineTotal);
+        public decimal Discount { get; set; }
 
         public ICollection<OrderDetail> Details = new Collection<OrderDetail>();
 
@@ -80,6 +88,11 @@ namespace DecoratorPattern
             OrderDetail detail = new OrderDetail(product, quantity);
 
             this.Details.Add(detail);
+        }
+
+        public Order()
+        {
+
         }
 
         public Order(DateTime orderDate, Customer customer)
