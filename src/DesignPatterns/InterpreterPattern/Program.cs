@@ -8,13 +8,15 @@ namespace InterpreterPattern
         {
             Console.WriteLine("Hello Interpreter Pattern!");
 
-            ParserTest();
+            // ParserTest();
+
+            Solution.InterpreterTests.Test();
         }
 
         private static void ParserTest()
         {
-            // (2 + 3) * (1 - 2)
-            string expression = "2 3 + 1 - 2 *";
+            // 2 3 + 5 *
+            string expression = "2 3 + 5 *";
 
             var parser = new Parser();
 
