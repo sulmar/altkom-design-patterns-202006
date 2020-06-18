@@ -36,8 +36,23 @@ namespace NullObjectPattern.Solution
         }
     }
 
+    //public class NullProduct : ProductBase
+    //{
+    //    public override void RateIt(int rate)
+    //    {
+    //        // nic nie rób
+    //    }
+    //}
+
+    // Rozwiązanie z użyciem NullObject i wzorca Singleton 
     public class NullProduct : ProductBase
     {
+        public static readonly ProductBase Instance = new NullProduct();
+
+        private NullProduct()
+        {
+        }
+
         public override void RateIt(int rate)
         {
             // nic nie rób
@@ -53,7 +68,9 @@ namespace NullObjectPattern.Solution
     {
         public ProductBase Get(int id)
         {
-            return new NullProduct();
+            // return new NullProduct();
+
+            return NullProduct.Instance;
         }
     }
 }
